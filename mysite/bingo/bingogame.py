@@ -33,7 +33,7 @@ csv.register_dialect('myDialect', delimiter=',', quoting=csv.QUOTE_NONE)
 #game files aws path
 partidasFile = '/home/ec2-user/app/mysite/bingo/persist/partidas.csv'
 bingosFile = '/home/ec2-user/app/mysite/bingo/persist/bingos.csv'
-cartonesFile = '/home/ec2-user/TPI/app/mysite/bingo/persist/cartones.csv'
+cartonesFile = '/home/ec2-user/app/mysite/bingo/persist/cartones.csv'
 nickFile = '/home/ec2-user/app/mysite/bingo/persist/nick.csv'
 balotasFile = '/home/ec2-user/app/mysite/bingo/persist/balotas.csv'
 ubalotaFile = '/home/ec2-user/app/mysite/bingo/persist/ubalota.csv'
