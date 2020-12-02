@@ -13,16 +13,6 @@ import csv
 import numpy as np
 import pandas as pd
 #arrays for temporal storage
-cartones=[]
-partidas2=[]
-partidas = []  
-balotas = []
-bingos = []
-nickname=[]
-termi=[]
-defin=[]
-
-csv.register_dialect('myDialect', delimiter=',', quoting=csv.QUOTE_NONE)
 
 # Create your views here.
 
@@ -36,42 +26,47 @@ def newgame(request):
 	response = bg.crearp()
 	return JsonResponse(response)
 	#return HttpResponse(response)
-
+@csrf_exempt #POST without logein creds
 def enter(request):
 	succes = 0
-	if request.method=='GET':
-		received_json_data = json.loads(request.body.decode("utf-8"))
+	if request.method=='POST':
+		#received_json_data = json.loads(request.body.decode("utf-8"))
+		received_json_data = json.loads(request.body)
 		nic = received_json_data['nickname']
 		idgame = received_json_data['idgame']
 		response = bg.entrar(idgame,nic)
 		return JsonResponse(response)
 	else:
 		return HttpResponse("wrong request")
-	
+@csrf_exempt #POST without logein creds	
 def balot(request):
-	if request.method=='GET':
+	if request.method=='POST':
 		received_json_data = json.loads(request.body.decode("utf-8"))
 		idGame = received_json_data['idgame']
 		nickname = received_json_data['nickname']
 		mess = bg.balota(idGame,nickname)
-	return JsonResponse(mess)
-
+		return JsonResponse(mess)
+	else:
+		return HttpResponse("wrong request")
+@csrf_exempt #POST without logein creds
 def deletegame(request):
-	if request.method=='GET':
+	if request.method=='POST':
 		received_json_data = json.loads(request.body.decode("utf-8"))
 		idgame = received_json_data['idgame']
 		response = bg.borrar(idgame)
 		return JsonResponse(response)
 	else:
 		return HttpResponse("wrong request")
-
+@csrf_exempt #POST without logein creds
 def winner(request):
-	if request.method=='GET':
+	if request.method=='POST':
 		received_json_data = json.loads(request.body.decode("utf-8"))
 		idgame = received_json_data['idgame']
 		idboard = received_json_data['idboard']
 		mess = bg.ganador(idgame,idboard)
-	return JsonResponse(mess)
+		return JsonResponse(mess)
+	else:
+		return HttpResponse("wrong request")
 
 def definitions(request):
 	if request.method=='GET':
@@ -90,8 +85,9 @@ def terms(request):
 		response = bg.terminos()
 		return JsonResponse(response)
 	else:
-		return HttpResponse("Nope")
+		return HttpResponse("Wrong request")
 def boards(request):
+	cartones=[]
 	db_Bingo = pymysql.connect("open-db.c7zw6t80m5e9.us-east-1.rds.amazonaws.com","opadmin","opendb123","bingo") # Conector (direccion, usuario, contraseña, nombre_BD)
 	cu = db_Bingo.cursor() # Declaracion del cursor
 	#cu.execute("INSERT INTO prueba VALUES ('Jz', 30);") # Se extraen los valores del id y los numeros del carton
@@ -113,26 +109,6 @@ def boards(request):
 	#with open('data.json', 'w') as file:
 	#   json.dump(data, file, indent=4)
 	return JsonResponse(data)
-
-
-
-	
-
-@csrf_exempt #POST without logein creds
-def newplayer(request):
-	username = "nocas"
-	if request.method=='POST':
-		received_json_data = json.loads(request.body.decode("utf-8"))
-		#if gameId == 2305:
-		username = received_json_data['nickname']
-		response = {
-			'id': 1,
-			'name': 'Tom',
-			'status': username
-		}
-	return JsonResponse(response)
-	#return HttpResponse(username)
-
 
 	##
 #@csrf_exempt
