@@ -11,25 +11,25 @@ import pandas as pd
 
 csv.register_dialect('myDialect', delimiter=',', quoting=csv.QUOTE_NONE)
 #gamefiles
-partidasFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/partidas.csv'
-bingosFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/bingos.csv'
-cartonesFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/cartones.csv'
-nickFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/nick.csv'
-balotasFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/balotas.csv'
-ubalotaFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/ubalota.csv'
-adminFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/admin.csv'
-terminosFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/terminos.csv'
-defFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/def.csv'
+# partidasFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/partidas.csv'
+# bingosFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/bingos.csv'
+# cartonesFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/cartones.csv'
+# nickFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/nick.csv'
+# balotasFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/balotas.csv'
+# ubalotaFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/ubalota.csv'
+# adminFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/admin.csv'
+# terminosFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/terminos.csv'
+# defFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/def.csv'
 #game files aws path
-# partidasFile = '/home/ec2-user/app/mysite/bingo/persist/partidas.csv'
-# bingosFile = '/home/ec2-user/app/mysite/bingo/persist/bingos.csv'
-# cartonesFile = '/home/ec2-user/app/mysite/bingo/persist/cartones.csv'
-# nickFile = '/home/ec2-user/app/mysite/bingo/persist/nick.csv'
-# balotasFile = '/home/ec2-user/app/mysite/bingo/persist/balotas.csv'
-# ubalotaFile = '/home/ec2-user/app/mysite/bingo/persist/ubalota.csv'
-# adminFile = '/home/ec2-user/app/mysite/bingo/persist/admin.csv'
-# terminosFile = '/home/ec2-user/app/mysite/bingo/persist/terminos.csv'
-# defFile = '/home/ec2-user/app/mysite/bingo/persist/def.csv'
+partidasFile = '/home/ec2-user/app/mysite/bingo/persist/partidas.csv'
+bingosFile = '/home/ec2-user/app/mysite/bingo/persist/bingos.csv'
+cartonesFile = '/home/ec2-user/app/mysite/bingo/persist/cartones.csv'
+nickFile = '/home/ec2-user/app/mysite/bingo/persist/nick.csv'
+balotasFile = '/home/ec2-user/app/mysite/bingo/persist/balotas.csv'
+ubalotaFile = '/home/ec2-user/app/mysite/bingo/persist/ubalota.csv'
+adminFile = '/home/ec2-user/app/mysite/bingo/persist/admin.csv'
+terminosFile = '/home/ec2-user/app/mysite/bingo/persist/terminos.csv'
+defFile = '/home/ec2-user/app/mysite/bingo/persist/def.csv'
 
 #creates a macth and returns its id
 def crearp():
