@@ -7,42 +7,43 @@ import csv
 import numpy as np
 import pandas as pd
 
-#arrays for temporal storage
-cartones=[]
-partidas2=[]
-partidas = []  
-balotas = []
-bingos = []
-nickname=[]
-termi=[]
-defin=[]
-ubalota=[]
-admin=[]
+
 
 csv.register_dialect('myDialect', delimiter=',', quoting=csv.QUOTE_NONE)
 #gamefiles
-# partidasFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/partidas.csv'
-# bingosFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/bingos.csv'
-# cartonesFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/cartones.csv'
-# nickFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/nick.csv'
-# balotasFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/balotas.csv'
-# ubalotaFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/ubalota.csv'
-# adminFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/admin.csv'
-# terminosFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/terminos.csv'
-# defFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/def.csv'
+partidasFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/partidas.csv'
+bingosFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/bingos.csv'
+cartonesFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/cartones.csv'
+nickFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/nick.csv'
+balotasFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/balotas.csv'
+ubalotaFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/ubalota.csv'
+adminFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/admin.csv'
+terminosFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/terminos.csv'
+defFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/def.csv'
 #game files aws path
-partidasFile = '/home/ec2-user/app/mysite/bingo/persist/partidas.csv'
-bingosFile = '/home/ec2-user/app/mysite/bingo/persist/bingos.csv'
-cartonesFile = '/home/ec2-user/app/mysite/bingo/persist/cartones.csv'
-nickFile = '/home/ec2-user/app/mysite/bingo/persist/nick.csv'
-balotasFile = '/home/ec2-user/app/mysite/bingo/persist/balotas.csv'
-ubalotaFile = '/home/ec2-user/app/mysite/bingo/persist/ubalota.csv'
-adminFile = '/home/ec2-user/app/mysite/bingo/persist/admin.csv'
-terminosFile = '/home/ec2-user/app/mysite/bingo/persist/terminos.csv'
-defFile = '/home/ec2-user/app/mysite/bingo/persist/def.csv'
+# partidasFile = '/home/ec2-user/app/mysite/bingo/persist/partidas.csv'
+# bingosFile = '/home/ec2-user/app/mysite/bingo/persist/bingos.csv'
+# cartonesFile = '/home/ec2-user/app/mysite/bingo/persist/cartones.csv'
+# nickFile = '/home/ec2-user/app/mysite/bingo/persist/nick.csv'
+# balotasFile = '/home/ec2-user/app/mysite/bingo/persist/balotas.csv'
+# ubalotaFile = '/home/ec2-user/app/mysite/bingo/persist/ubalota.csv'
+# adminFile = '/home/ec2-user/app/mysite/bingo/persist/admin.csv'
+# terminosFile = '/home/ec2-user/app/mysite/bingo/persist/terminos.csv'
+# defFile = '/home/ec2-user/app/mysite/bingo/persist/def.csv'
 
 #creates a macth and returns its id
 def crearp():
+	#arrays for temporal storage
+	cartones=[]
+	partidas2=[]
+	partidas = []  
+	balotas = []
+	bingos = []
+	nickname=[]
+	termi=[]
+	defin=[]
+	ubalota=[]
+	admin=[]
 	with open(partidasFile) as File:  
 		reader = csv.reader(File)
 		for row in reader:
@@ -152,6 +153,17 @@ def crearp():
 	return response
 #new player joins existing match
 def entrar(codigo, nic):
+	#arrays for temporal storage
+	cartones=[]
+	partidas2=[]
+	partidas = []  
+	balotas = []
+	bingos = []
+	nickname=[]
+	termi=[]
+	defin=[]
+	ubalota=[]
+	admin=[]
 	succes  = 0
 	with open(partidasFile) as File:  
 		reader = csv.reader(File)
@@ -254,6 +266,17 @@ def entrar(codigo, nic):
 		return response
 #pulls random number from pool
 def balota(codigo, nic):
+	#arrays for temporal storage
+	cartones=[]
+	partidas2=[]
+	partidas = []  
+	balotas = []
+	bingos = []
+	nickname=[]
+	termi=[]
+	defin=[]
+	ubalota=[]
+	admin=[]
 	balotaPartida = 0
 	with open(partidasFile) as File:  
 		reader = csv.reader(File)
@@ -316,7 +339,7 @@ def balota(codigo, nic):
 			#print(idcarton)
 			balotas[partidas.index(codigo)].remove(idbalota) #Mirar error en cero 
 			#print(balotas[partidas.index(codigo)])
-			ubalota[partidas.index(codigo)]=idbalota
+			ubalota[partidas.index(codigo)]=str(idbalota)
 			print(ubalota[partidas.index(codigo)])
 			
 		else:
@@ -340,6 +363,17 @@ def balota(codigo, nic):
 	return response
 #delete a match
 def borrar(codigo):
+	#arrays for temporal storage
+	cartones=[]
+	partidas2=[]
+	partidas = []  
+	balotas = []
+	bingos = []
+	nickname=[]
+	termi=[]
+	defin=[]
+	ubalota=[]
+	admin=[]
 	mensResp = 'temp'
 	with open(partidasFile) as File:  
 		reader = csv.reader(File)
@@ -464,6 +498,17 @@ def borrar(codigo):
 	return response
 
 def ganador(codigo, numero):
+	#arrays for temporal storage
+	cartones=[]
+	partidas2=[]
+	partidas = []  
+	balotas = []
+	bingos = []
+	nickname=[]
+	termi=[]
+	defin=[]
+	ubalota=[]
+	admin=[]
 	mensResp = 'temp'
 	with open(partidasFile) as File:  
 		reader = csv.reader(File)
@@ -492,9 +537,9 @@ def ganador(codigo, numero):
 	if codigo in partidas:
 	
 		#print('Ganador partida '+ partidas[partidas.index(codigo)] +' '+numero) 
-		#usuario=nickname[partidas.index(codigo)][int(numero)-1]
+		usuario=nickname[partidas.index(codigo)][int(numero)-1]
 		#print(usuario)
-		mensResp = 'Ganador partida'
+		mensResp = str(usuario)
 	else:
 		print('No existe esta partida: '+ entrada[8:12])
 		mensResp = 'No existe esta partida'
@@ -502,6 +547,7 @@ def ganador(codigo, numero):
 	return response
 #returns bingo ambiental terms as dict
 def terminos():
+	termi=[]
 	with open(terminosFile) as File:  
 		reader = csv.reader(File)
 		for row in reader:
@@ -513,6 +559,7 @@ def terminos():
 	return res_dct
 #returns bingo ambiental definitions as dict
 def defi():
+	defin=[]
 	with open(defFile) as File:  
 		reader = csv.reader(File)
 		for row in reader:
