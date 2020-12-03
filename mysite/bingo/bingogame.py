@@ -323,13 +323,16 @@ def balota(codigo, nic):
 				z=1
 				#partidas.append(row)
 			elif len(row) == 5:
-				row=str(row)
-				row=row.replace(",", "")
-				row=row.replace("'", "") 
-				row=row.replace("[", "") 
-				row=row.replace("]", "") 
-				row=row.replace(" ", "")
-				balotas.append(row)
+				if row[3] == 'X':
+					row=str(row)
+					row=row.replace(",", "")
+					row=row.replace("'", "") 
+					row=row.replace("[", "") 
+					row=row.replace("]", "") 
+					row=row.replace(" ", "")
+					balotas.append(row)
+				else:
+					balotas.append(row)
 			else:
 				balotas.append(row)
 			
@@ -380,19 +383,24 @@ def balota(codigo, nic):
 		if len(balotas[partidas.index(codigo)])>0:          
 			print('Balota para partida '+ partidas[partidas.index(codigo)])
 			idbalota = random.choice(balotas[partidas.index(codigo)])
-			#print(idbalota)
+			print("idbalota"+str(idbalota))
 			#print(idcarton)
 			if ubalota[partidas.index(codigo)]=='X':
 				salida='X'+ ganador[partidas.index(codigo)]
-				balotaPartida = -1
+				balotaPartida = salida
 			else:
-				balotas[partidas.index(codigo)].remove(idbalota)
+				print(balotas[partidas.index(codigo)])
+				print("index"+str(partidas.index(codigo)))
+				balotas[partidas.index(codigo)].remove(str(idbalota))
 				ubalota[partidas.index(codigo)]=str(idbalota)
 				salida=ubalota[partidas.index(codigo)] #Mirar error en cero 
-				balotaPartida = idbalota
+				balotaPartida = salida
+				print(balotas[partidas.index(codigo)])
+				if len(balotas[partidas.index(codigo)]) == 0:
+					balotas[partidas.index(codigo)] = '0'
+					print("done")
 			#print(balotas[partidas.index(codigo)])
 			#ubalota[partidas.index(codigo)]=str(idbalota)
-			print(salida)
 		else:
 			print('no quedan balotas')
 			balotaPartida = 0
@@ -400,7 +408,6 @@ def balota(codigo, nic):
 		if ubalota[partidas.index(codigo)] =='X':
 			balotaPartida = 'X'+ ganador[partidas.index(codigo)]
 			print('X'+ganador[partidas.index(codigo)])
-			balotaPartida = -1
 
 		else:
 			print("no admin")
@@ -416,11 +423,8 @@ def balota(codigo, nic):
 		writer.writerows(ubalota)
 	#print(len(balotas[partidas.index(codigo)]))
 	#respuesta en diccionario
-	mensaje = '0'
-	if balotaPartida == -1:
-		mensaje = 'X'+ ganador[partidas.index(codigo)]
-	else:
-		mensaje = str(balotaPartida)
+	mensaje = balotaPartida
+
 	response = {'balota': mensaje}
 
 	return response
