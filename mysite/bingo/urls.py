@@ -13,4 +13,5 @@ urlpatterns = [
     path('definitions', views.definitions, name='definitions'),
     path('terms', views.terms, name='terms'),
     path('boards', views.boards, name='boards'),
+    path('sound', views.sound, name='sound'),
 ]

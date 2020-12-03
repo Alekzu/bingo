@@ -12,6 +12,7 @@ import time
 import csv
 import numpy as np
 import pandas as pd
+import os
 #arrays for temporal storage
 
 # Create your views here.
@@ -30,7 +31,7 @@ def deleteall(request):
 	response = bg.borrartodo()
 	return JsonResponse(response)
 	#return HttpResponse(response)
-@csrf_exempt #POST without logein creds
+@csrf_exempt #POST without login creds
 def enter(request):
 	if request.method=='POST':
 		received_json_data = json.loads(request.body.decode("utf-8"))
@@ -41,7 +42,7 @@ def enter(request):
 		return JsonResponse(response)
 	else:
 		return HttpResponse("wrong request")
-@csrf_exempt #POST without logein creds	
+@csrf_exempt #POST without login creds	
 def balot(request):
 	if request.method=='POST':
 		received_json_data = json.loads(request.body.decode("utf-8"))
@@ -51,7 +52,7 @@ def balot(request):
 		return JsonResponse(mess)
 	else:
 		return HttpResponse("wrong request")
-@csrf_exempt #POST without logein creds
+@csrf_exempt #POST without login creds
 def deletegame(request):
 	if request.method=='POST':
 		received_json_data = json.loads(request.body.decode("utf-8"))
@@ -60,7 +61,7 @@ def deletegame(request):
 		return JsonResponse(response)
 	else:
 		return HttpResponse("wrong request")
-@csrf_exempt #POST without logein creds
+@csrf_exempt #POST without login creds
 def winner(request):
 	if request.method=='POST':
 		received_json_data = json.loads(request.body.decode("utf-8"))
@@ -114,4 +115,18 @@ def boards(request):
 	return JsonResponse(data)
 
 	##
-#@csrf_exempt
+@csrf_exempt
+def sound(request):
+	if request.method=='POST':
+		received_json_data = json.loads(request.body.decode("utf-8"))
+		soundreq = received_json_data['idsound']
+		fname = '/home/ec2-user/app/mysite/bingo/sounds/'+soundreq+'. .mp3'
+		#fname = '/mnt/c/Unal/TPI/app/mysite/bingo/sounds/'+soundreq+'. .mp3'
+		f = open(fname,"rb") 
+		response = HttpResponse()
+		response.write(f.read())
+		response['Content-Type'] ='audio/mp3'
+		response['Content-Length'] =os.path.getsize(fname )
+		return response
+	else:
+		return HttpResponse("Wrong request")
