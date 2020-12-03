@@ -238,7 +238,7 @@ def entrar(codigo, nic):
 				nickname.append(row)
 
 	#print(len(bingos[partidas.index(codigo)]))
-	print(admin[partidas.index(codigo)])
+	#print(admin[partidas.index(codigo)])
 	
 	if len(bingos[partidas.index(codigo)])>0:
 		print('Entrando a la partida '+ partidas[partidas.index(codigo)]) 
