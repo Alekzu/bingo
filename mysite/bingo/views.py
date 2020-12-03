@@ -28,10 +28,9 @@ def newgame(request):
 	#return HttpResponse(response)
 @csrf_exempt #POST without logein creds
 def enter(request):
-	succes = 0
 	if request.method=='POST':
-		#received_json_data = json.loads(request.body.decode("utf-8"))
-		received_json_data = json.loads(request.body)
+		received_json_data = json.loads(request.body.decode("utf-8"))
+		#received_json_data = json.loads(request.body)
 		nic = received_json_data['nickname']
 		idgame = received_json_data['idgame']
 		response = bg.entrar(idgame,nic)
