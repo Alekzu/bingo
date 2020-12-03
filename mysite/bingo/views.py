@@ -26,6 +26,10 @@ def newgame(request):
 	response = bg.crearp()
 	return JsonResponse(response)
 	#return HttpResponse(response)
+def deleteall(request):
+	response = bg.borrartodo()
+	return JsonResponse(response)
+	#return HttpResponse(response)
 @csrf_exempt #POST without logein creds
 def enter(request):
 	if request.method=='POST':

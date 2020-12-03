@@ -8,6 +8,7 @@ urlpatterns = [
     path('enter', views.enter, name='enter'),
     path('balot', views.balot, name='balot'),
     path('deletegame', views.deletegame, name='deletegame'),
+    path('deleteall', views.deleteall, name='deleteall'),
     path('winner', views.winner, name='winner'),
     path('definitions', views.definitions, name='definitions'),
     path('terms', views.terms, name='terms'),
