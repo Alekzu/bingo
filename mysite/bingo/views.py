@@ -76,7 +76,7 @@ def definitions(request):
 		response = bg.defi()
 		return JsonResponse(response)
 	else:
-		return HttpResponse("Nope")
+		return HttpResponse("Wrong request")
 def terms(request):
 	if request.method=='GET':
 		#received_json_data = json.loads(request.body.decode("utf-8"))

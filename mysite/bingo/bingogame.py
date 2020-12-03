@@ -20,6 +20,7 @@ csv.register_dialect('myDialect', delimiter=',', quoting=csv.QUOTE_NONE)
 # adminFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/admin.csv'
 # terminosFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/terminos.csv'
 # defFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/def.csv'
+# ganadorFile = '/mnt/c/Unal/TPI/app/mysite/bingo/persist/ganador.csv'
 #game files aws path
 partidasFile = '/home/ec2-user/app/mysite/bingo/persist/partidas.csv'
 bingosFile = '/home/ec2-user/app/mysite/bingo/persist/bingos.csv'
@@ -30,7 +31,9 @@ ubalotaFile = '/home/ec2-user/app/mysite/bingo/persist/ubalota.csv'
 adminFile = '/home/ec2-user/app/mysite/bingo/persist/admin.csv'
 terminosFile = '/home/ec2-user/app/mysite/bingo/persist/terminos.csv'
 defFile = '/home/ec2-user/app/mysite/bingo/persist/def.csv'
+ganadorFile = '/home/ec2-user/app/mysite/bingo/persist/ganador.csv'
 
+#creates a macth and returns its id
 #creates a macth and returns its id
 def crearp():
 	#arrays for temporal storage
@@ -44,6 +47,7 @@ def crearp():
 	defin=[]
 	ubalota=[]
 	admin=[]
+	ganador=[]
 	with open(partidasFile) as File:  
 		reader = csv.reader(File)
 		for row in reader:
@@ -104,6 +108,19 @@ def crearp():
 				row=row.replace("]", "") 
 				row=row.replace(" ", "")
 				admin.append(row)
+	with open(ganadorFile) as File:  
+		reader = csv.reader(File)
+		for row in reader:
+			if len(row) == 0:
+				z=1
+			else:
+				row=str(row)
+				row=row.replace(",", "")
+				row=row.replace("'", "") 
+				row=row.replace("[", "") 
+				row=row.replace("]", "") 
+				row=row.replace(" ", "")
+				ganador.append(row)
 	with open(nickFile) as File:  
 		reader = csv.reader(File)
 		for row in reader:
@@ -121,6 +138,7 @@ def crearp():
 	nickname.append(list(range(1,101)))
 	ubalota.append(str(0))
 	admin.append(str(0))
+	ganador.append(str(0))
 	#print(ubalota)
 	myFile = open(partidasFile, 'w')
 	with myFile:
@@ -130,6 +148,10 @@ def crearp():
 	with myFile:
 		writer = csv.writer(myFile, dialect='myDialect')
 		writer.writerows(admin)
+	myFile = open(ganadorFile, 'w')
+	with myFile:
+		writer = csv.writer(myFile, dialect='myDialect')
+		writer.writerows(ganador)
 	myFile = open(ubalotaFile, 'w')
 	with myFile:
 		writer = csv.writer(myFile, dialect='myDialect')
@@ -277,6 +299,7 @@ def balota(codigo, nic):
 	defin=[]
 	ubalota=[]
 	admin=[]
+	ganador=[]
 	balotaPartida = 0
 	with open(partidasFile) as File:  
 		reader = csv.reader(File)
@@ -299,9 +322,17 @@ def balota(codigo, nic):
 			if len(row) == 0:
 				z=1
 				#partidas.append(row)
+			elif len(row) == 5:
+				row=str(row)
+				row=row.replace(",", "")
+				row=row.replace("'", "") 
+				row=row.replace("[", "") 
+				row=row.replace("]", "") 
+				row=row.replace(" ", "")
+				balotas.append(row)
 			else:
 				balotas.append(row)
-				#print(balotas)
+			
 	with open(adminFile) as File:  
 		reader = csv.reader(File)
 		for row in reader:
@@ -315,6 +346,19 @@ def balota(codigo, nic):
 				row=row.replace("]", "") 
 				row=row.replace(" ", "")
 				admin.append(row)
+	with open(ganadorFile) as File:  
+		reader = csv.reader(File)
+		for row in reader:
+			if len(row) == 0:
+				z=1
+			else:
+				row=str(row)
+				row=row.replace(",", "")
+				row=row.replace("'", "") 
+				row=row.replace("[", "") 
+				row=row.replace("]", "") 
+				row=row.replace(" ", "")
+				ganador.append(row)
 	with open(ubalotaFile) as File:  
 		reader = csv.reader(File)
 		for row in reader:
@@ -331,24 +375,37 @@ def balota(codigo, nic):
 	#print(nic)
 	#print(admin[partidas.index(codigo)])
 	#print(ubalota[partidas.index(codigo)])
+
 	if nic == admin[partidas.index(codigo)]:
 		if len(balotas[partidas.index(codigo)])>0:          
 			print('Balota para partida '+ partidas[partidas.index(codigo)])
 			idbalota = random.choice(balotas[partidas.index(codigo)])
 			#print(idbalota)
 			#print(idcarton)
-			balotas[partidas.index(codigo)].remove(idbalota) #Mirar error en cero 
+			if ubalota[partidas.index(codigo)]=='X':
+				salida='X'+ ganador[partidas.index(codigo)]
+				balotaPartida = -1
+			else:
+				balotas[partidas.index(codigo)].remove(idbalota)
+				ubalota[partidas.index(codigo)]=str(idbalota)
+				salida=ubalota[partidas.index(codigo)] #Mirar error en cero 
+				balotaPartida = idbalota
 			#print(balotas[partidas.index(codigo)])
-			ubalota[partidas.index(codigo)]=str(idbalota)
-			print(ubalota[partidas.index(codigo)])
-			
+			#ubalota[partidas.index(codigo)]=str(idbalota)
+			print(salida)
 		else:
 			print('no quedan balotas')
 			balotaPartida = 0
 	else:
-		print("no admin")
-		print(ubalota[partidas.index(codigo)])
-		balotaPartida = ubalota[partidas.index(codigo)]
+		if ubalota[partidas.index(codigo)] =='X':
+			balotaPartida = 'X'+ ganador[partidas.index(codigo)]
+			print('X'+ganador[partidas.index(codigo)])
+			balotaPartida = -1
+
+		else:
+			print("no admin")
+			#print(ubalota[partidas.index(codigo)])
+			balotaPartida = ubalota[partidas.index(codigo)]
 	myFile = open(balotasFile, 'w')
 	with myFile:
 		writer = csv.writer(myFile, dialect='myDialect')
@@ -358,8 +415,14 @@ def balota(codigo, nic):
 		writer = csv.writer(myFile, dialect='myDialect')
 		writer.writerows(ubalota)
 	#print(len(balotas[partidas.index(codigo)]))
-	balotaPartida = ubalota[partidas.index(codigo)]
-	response = {'balota': balotaPartida}
+	#respuesta en diccionario
+	mensaje = '0'
+	if balotaPartida == -1:
+		mensaje = 'X'+ ganador[partidas.index(codigo)]
+	else:
+		mensaje = str(balotaPartida)
+	response = {'balota': mensaje}
+
 	return response
 #delete a match
 def borrar(codigo):
@@ -374,6 +437,7 @@ def borrar(codigo):
 	defin=[]
 	ubalota=[]
 	admin=[]
+	ganador=[]
 	mensResp = 'temp'
 	with open(partidasFile) as File:  
 		reader = csv.reader(File)
@@ -416,6 +480,19 @@ def borrar(codigo):
 				row=row.replace("]", "") 
 				row=row.replace(" ", "")
 				admin.append(row)
+	with open(ganadorFile) as File:  
+		reader = csv.reader(File)
+		for row in reader:
+			if len(row) == 0:
+				z=1
+			else:
+				row=str(row)
+				row=row.replace(",", "")
+				row=row.replace("'", "") 
+				row=row.replace("[", "") 
+				row=row.replace("]", "") 
+				row=row.replace(" ", "")
+				ganador.append(row)
 	with open(balotasFile) as File:  
 		reader = csv.reader(File)
 		for row in reader:
@@ -461,12 +538,13 @@ def borrar(codigo):
 		del bingos[partidas.index(codigo)]
 		del nickname[partidas.index(codigo)]  
 		del admin[partidas.index(codigo)]
+		del ganador[partidas.index(codigo)]
 		del ubalota[partidas.index(codigo)]
 		del partidas[partidas.index(codigo)]
 		mensResp = 'partida borrada'
 	else:
 		print('No existe esta partida: '+ codigo)
-		mensResp = 'No existe esta partida'
+		mensResp = 'No existe esta partida' + codigo
 	
 	myFile = open(partidasFile, 'w')
 	with myFile:
@@ -476,6 +554,10 @@ def borrar(codigo):
 	with myFile:
 		writer = csv.writer(myFile, dialect='myDialect')
 		writer.writerows(admin)
+	myFile = open(ganadorFile, 'w')
+	with myFile:
+		writer = csv.writer(myFile, dialect='myDialect')
+		writer.writerows(ganador)
 	myFile = open(ubalotaFile, 'w')
 	with myFile:
 		writer = csv.writer(myFile, dialect='myDialect')
@@ -509,7 +591,34 @@ def ganador(codigo, numero):
 	defin=[]
 	ubalota=[]
 	admin=[]
+	ganador=[]
 	mensResp = 'temp'
+	with open(ubalotaFile) as File:  
+		reader = csv.reader(File)
+		for row in reader:
+			if len(row) == 0:
+				z=1
+			else:
+				row=str(row)
+				row=row.replace(",", "")
+				row=row.replace("'", "") 
+				row=row.replace("[", "") 
+				row=row.replace("]", "") 
+				row=row.replace(" ", "")
+				ubalota.append(row)
+	with open(ganadorFile) as File:  
+		reader = csv.reader(File)
+		for row in reader:
+			if len(row) == 0:
+				z=1
+			else:
+				row=str(row)
+				row=row.replace(",", "")
+				row=row.replace("'", "") 
+				row=row.replace("[", "") 
+				row=row.replace("]", "") 
+				row=row.replace(" ", "")
+				ganador.append(row)
 	with open(partidasFile) as File:  
 		reader = csv.reader(File)
 		for row in reader:
@@ -533,17 +642,44 @@ def ganador(codigo, numero):
 		#partidas.append(row)
 			else:
 				nickname.append(row)
-
+	with open(balotasFile) as File:  
+		reader = csv.reader(File)
+		for row in reader:
+			if len(row) == 0:
+				z=1
+				#partidas.append(row)
+			else:
+				print(balotas)
+				balotas.append(row)
 	if codigo in partidas:
 	
 		#print('Ganador partida '+ partidas[partidas.index(codigo)] +' '+numero) 
-		usuario=nickname[partidas.index(codigo)][int(numero)-1]
+		balotas[partidas.index(codigo)]='X'
+		ubalota[partidas.index(codigo)]='X'
+		print(balotas[partidas.index(codigo)])
+		print(nickname[partidas.index(codigo)][int(numero)-1])
+		ganador[partidas.index(codigo)]=nickname[partidas.index(codigo)][int(numero)-1]
 		#print(usuario)
-		mensResp = str(usuario)
+		mensResp = ganador[partidas.index(codigo)]
+		#print(balotas)
 	else:
 		print('No existe esta partida: '+ entrada[8:12])
 		mensResp = 'No existe esta partida'
 	response = {'message': mensResp}
+
+	myFile = open(ganadorFile, 'w')
+	with myFile:
+		writer = csv.writer(myFile, dialect='myDialect')
+		writer.writerows(ganador)
+
+	myFile = open(ubalotaFile, 'w')
+	with myFile:
+		writer = csv.writer(myFile, dialect='myDialect')
+		writer.writerows(ubalota)
+	myFile = open(balotasFile, 'w')
+	with myFile:
+		writer = csv.writer(myFile, dialect='myDialect')
+		writer.writerows(balotas)
 	return response
 #returns bingo ambiental terms as dict
 def terminos():
