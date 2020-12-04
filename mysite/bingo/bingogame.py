@@ -396,9 +396,12 @@ def balota(codigo, nic):
 				salida=ubalota[partidas.index(codigo)] #Mirar error en cero 
 				balotaPartida = salida
 				print(balotas[partidas.index(codigo)])
+
 				if len(balotas[partidas.index(codigo)]) == 0:
-					balotas[partidas.index(codigo)] = '0'
+					balotas[partidas.index(codigo)] = 'Y'
+					#ubalota[partidas.index(codigo)] = 'Y'
 					print("done")
+
 			#print(balotas[partidas.index(codigo)])
 			#ubalota[partidas.index(codigo)]=str(idbalota)
 		else:
@@ -411,8 +414,17 @@ def balota(codigo, nic):
 
 		else:
 			print("no admin")
+			ultimabal = str(balotas[partidas.index(codigo)])
+			ultimabal =ultimabal.replace(",", "")
+			ultimabal =ultimabal.replace("'", "") 
+			ultimabal =ultimabal.replace("[", "") 
+			ultimabal =ultimabal.replace("]", "") 
+			ultimabal =ultimabal.replace(" ", "")
 			#print(ubalota[partidas.index(codigo)])
 			balotaPartida = ubalota[partidas.index(codigo)]
+			print(ultimabal)
+			if ultimabal == 'Y':
+				ubalota[partidas.index(codigo)] = 'Y'
 	myFile = open(balotasFile, 'w')
 	with myFile:
 		writer = csv.writer(myFile, dialect='myDialect')
