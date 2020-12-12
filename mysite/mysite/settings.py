@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'zunmeedwq(=j^7$ktd5f$r1l$jz+2g0!okah@z9x^)sjgfmc^1'
+SECRET_KEY = 's'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -83,17 +83,7 @@ DATABASES = {
        'NAME': BASE_DIR / 'db.sqlite3',
    }
 }
-#end default
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'opendb1',
-#         'USER': 'opadmin',
-#         'PASSWORD': 'opendb123',
-#         'HOST': 'open-db.c7zw6t80m5e9.us-east-1.rds.amazonaws.com',
-#         'PORT': '3306',
-#     }
-# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
